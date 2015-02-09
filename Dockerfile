@@ -23,8 +23,7 @@ RUN apt-get update && \
     				   postgresql-9.3 \
     				   postgresql-client-9.3 \
     				   postgresql-contrib-9.3 \
-    				   postgresql-9.3-postgis-2.1 \
-    				   libgdal1h
+    				   postgresql-9.3-postgis-2.1
 
 
 # Run all futher commands from postgres user

@@ -1,5 +1,5 @@
 # System variables
-DOCKER_IMAGE=prawncake/postgis
+DOCKER_IMAGE=prawncake/docker-postgis
 
 help:
 # target: help - Display callable targets
