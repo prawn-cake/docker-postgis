@@ -1,5 +1,5 @@
 # docker-postgis
-Docker image with PostgreSQL 9.3 + PostGIS
+Docker image with PostgreSQL 9.3 + PostGIS 2.1
 
 # Usage
 

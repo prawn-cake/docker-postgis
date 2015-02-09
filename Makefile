@@ -15,3 +15,9 @@ run:
 build:
 # target: build - Build docker image
 	@docker build -t $(DOCKER_IMAGE) .
+	
+	
+.PHONY: pull
+pull:
+# target: pull - Pull docker image from docker hub
+	@docker pull $(DOCKER_IMAGE)
