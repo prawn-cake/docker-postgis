@@ -10,9 +10,11 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F
 #     of PostgreSQL, ``9.3``.
 # RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
 
-# Set locales
+# Set locales and test database
 RUN locale-gen --no-purge en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
+ENV LC_ALL="en_US.UTF-8" POSTGIS_DB="test_db"
+
+
 RUN update-locale LANG=en_US.UTF-8
 
 # Install dependencies
@@ -33,7 +35,11 @@ USER postgres
 # then create a database `docker` owned by the ``docker`` role.
 RUN /etc/init.d/postgresql start && \
     psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && \
-    createdb -O docker docker
+    createdb -O docker ${POSTGIS_DB}
+
+# Setup postgis extension
+RUN psql -d ${POSTGIS_DB} -c "CREATE EXTENSION postgis;" && \
+	psql -d ${POSTGIS_DB} -c "CREATE EXTENSION postgis_topology;"
 
 # Adjust PostgreSQL configuration so that remote connections to the database are possible. 
 RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf && \

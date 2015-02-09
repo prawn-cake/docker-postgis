@@ -9,7 +9,7 @@ Docker image with PostgreSQL 9.3 + PostGIS
 * Build image: `make build`
 * Run container: `make run`
 
-**NOTE:** Container will be started on `tcp:5433` port, it needs for development purposes. To change it run it manually with instruction below.
+**NOTE:** Container will be started on `tcp:5433` port, it needs for development purposes. To change this invoke `docker run` command as described below.
 
 
 ## Use docker hub
