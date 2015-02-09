@@ -35,17 +35,18 @@ USER postgres
 # then create a database `docker` owned by the ``docker`` role.
 RUN /etc/init.d/postgresql start && \
     psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && \
-    createdb -O docker $POSTGIS_DB
+    createdb -O docker "$POSTGIS_DB"
 
 # Setup postgis extension
-RUN psql -d $POSTGIS_DB -c "CREATE EXTENSION postgis;" && \
-	psql -d $POSTGIS_DB -c "CREATE EXTENSION postgis_topology;"
+RUN psql -d "$POSTGIS_DB" -c "CREATE EXTENSION postgis;" && \
+	psql -d "$POSTGIS_DB" -c "CREATE EXTENSION postgis_topology;"
 
 # Adjust PostgreSQL configuration so that remote connections to the database are possible. 
 RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf && \
 	echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
 
 RUN /etc/init.d/postgresql restart
+
 # Expose the PostgreSQL port
 EXPOSE 5432
 
