@@ -6,15 +6,9 @@ MAINTAINER Maksim Ekimovskii <ekimovsky.maksim@gmail.com>
 # It should be the same key as https://www.postgresql.org/media/keys/ACCC4CF8.asc
 RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
-# Add PostgreSQL's repository. It contains the most recent stable release
-#     of PostgreSQL, ``9.3``.
-# RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
-
 # Set locales and test database
 RUN locale-gen --no-purge en_US.UTF-8
 ENV LC_ALL="en_US.UTF-8" POSTGIS_DB="test_db"
-
-
 RUN update-locale LANG=en_US.UTF-8
 
 # Install dependencies
