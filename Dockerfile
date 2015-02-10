@@ -27,12 +27,14 @@ RUN apt-get update && \
     				   postgresql-contrib-9.3 \
     				   postgresql-9.3-postgis-2.1
 
-
+# Adjust PostgreSQL configuration so that remote connections to the database are possible. 
+RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf && \
+	echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
+	
 # Run all futher commands from postgres user
 USER postgres
 
-# Create a PostgreSQL role named ``docker`` with ``docker`` as the password and
-# then create a database `docker` owned by the ``docker`` role.
+# Create new ROLE 'docker' with password 'docker'
 RUN /etc/init.d/postgresql start && \
     psql --command "CREATE USER docker WITH SUPERUSER PASSWORD 'docker';" && \
     createdb -O docker "$POSTGIS_DB"
@@ -40,10 +42,6 @@ RUN /etc/init.d/postgresql start && \
 # Setup postgis extension
 RUN psql -d "$POSTGIS_DB" -c "CREATE EXTENSION postgis;" && \
 	psql -d "$POSTGIS_DB" -c "CREATE EXTENSION postgis_topology;"
-
-# Adjust PostgreSQL configuration so that remote connections to the database are possible. 
-RUN echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/9.3/main/pg_hba.conf && \
-	echo "listen_addresses='*'" >> /etc/postgresql/9.3/main/postgresql.conf
 
 RUN /etc/init.d/postgresql restart
 

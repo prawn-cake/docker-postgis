@@ -8,7 +8,7 @@ help:
 
 .PHONY: run
 run:
-# target: run_docker - Run rocketws with docker
+# target: run - Run docker container
 	@docker run -i -t -d -p 5433:5432 $(DOCKER_IMAGE) /bin/bash
 	
 .PHONY: build
