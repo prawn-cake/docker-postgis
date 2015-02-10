@@ -30,6 +30,6 @@ Development docker image with PostgreSQL + PostGIS
 ## Use image from docker hub
 
 * Pull image: `docker pull prawncake/docker-postgis`
-* Run container: `docker run -i -t -d -p 5432:5432 prawncake/docker-postgis /bin/bash`
+* Run container: `docker run -i -t -d -p 5432:5432 prawncake/docker-postgis`
 
 **NOTE:** After container run you will be able to connect, for example with psql: `psql -Udocker -hlocalhost -p{port} -dtest_db` with password *docker*

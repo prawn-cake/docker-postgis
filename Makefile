@@ -3,7 +3,11 @@ DOCKER_IMAGE=prawncake/docker-postgis
 PORT=5433
 CONTAINER_PORT=5432
 CONTAINER_NAME=postgis
-CMD=/bin/bash
+#CMD=/bin/bash
+CMD=
+USER=docker
+DB_NAME=test_db
+
 
 help:
 # target: help - Display callable targets
@@ -25,3 +29,9 @@ build:
 pull:
 # target: pull - Pull docker image from docker hub
 	@docker pull $(DOCKER_IMAGE)
+	
+
+.PHONY: connect
+connect:
+# target: connect - Connect to database with psql
+	@psql -U$(USER) -hlocalhost -p$(PORT)5433 -d$(DB_NAME)
