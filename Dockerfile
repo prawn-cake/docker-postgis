@@ -40,10 +40,9 @@ RUN /etc/init.d/postgresql start && \
     createdb -O docker "$POSTGIS_DB"
 
 # Setup postgis extension
-RUN psql -d "$POSTGIS_DB" -c "CREATE EXTENSION postgis;" && \
+RUN /etc/init.d/postgresql restart && \
+	psql -d "$POSTGIS_DB" -c "CREATE EXTENSION postgis;" && \
 	psql -d "$POSTGIS_DB" -c "CREATE EXTENSION postgis_topology;"
-
-RUN /etc/init.d/postgresql restart
 
 # Expose the PostgreSQL port
 EXPOSE 5432

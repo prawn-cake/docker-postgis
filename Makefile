@@ -1,5 +1,9 @@
 # System variables
 DOCKER_IMAGE=prawncake/docker-postgis
+PORT=5433
+CONTAINER_PORT=5432
+CONTAINER_NAME=postgis
+CMD=/bin/bash
 
 help:
 # target: help - Display callable targets
@@ -9,12 +13,12 @@ help:
 .PHONY: run
 run:
 # target: run - Run docker container
-	@docker run -i -t -d -p 5433:5432 $(DOCKER_IMAGE) /bin/bash
+	@docker run --name $(CONTAINER_NAME) -i -t -d -p $(PORT):$(CONTAINER_PORT) $(DOCKER_IMAGE) $(CMD)
 	
 .PHONY: build
 build:
 # target: build - Build docker image
-	@docker build -t $(DOCKER_IMAGE) .
+	@docker build -t $(DOCKER_IMAGE) $(CURDIR)
 	
 	
 .PHONY: pull
